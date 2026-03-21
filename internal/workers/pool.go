@@ -26,20 +26,7 @@ func NewWrokerPool(WorkersCount int, logger logger.Interface) *WorkerPool {
 func (w *WorkerPool) Start() {
 	for i := 0; i < w.WorkersCount; i++ {
 		i := i
-		go func() {
-			w.Logger.Info("Start worker", "Number", i)
-		LOOP:
-			for {
-				select {
-				case job, ok := <-w.jobs:
-					if !ok {
-						break LOOP
-					}
-					job()
-					w.wg.Done()
-				}
-			}
-		}()
+		go Worker(&w.wg, w.jobs, w.Logger, i)
 	}
 }
 
