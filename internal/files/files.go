@@ -6,10 +6,11 @@ import (
 	"github.com/kaluginivann/Aegis/internal/configs"
 )
 
-func CheckExistsFile(conf *configs.Config) error {
-	if _, err := os.Stat(conf.FilePath); err != nil {
+func CheckExistsFile(conf *configs.Config) (os.FileInfo, error) {
+	FileInfo, err := os.Stat(conf.FilePath)
+	if err != nil {
 		conf.Logger.Error("File does not exists", "error", err)
-		return err
+		return nil, err
 	}
-	return nil
+	return FileInfo, nil
 }
