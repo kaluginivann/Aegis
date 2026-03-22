@@ -15,7 +15,7 @@ func NewDetector() *Detector {
 		Signatures: []Signature{
 			{
 				Name:    "Nop sled",
-				Pattern: []byte{0x90, 0x90, 0x90},
+				Pattern: []byte{0x90, 0x90, 0x90, 0x90, 0x90},
 			},
 			{
 				Name:    "MZ Header",
