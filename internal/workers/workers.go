@@ -6,17 +6,18 @@ import (
 	"github.com/kaluginivann/Aegis/internal/logger"
 )
 
-func Worker(wg *sync.WaitGroup, jobChannel <-chan Job, logger logger.Interface, i int) {
-	logger.Info("Start worker", "Number", i)
-LOOP:
+func Worker(wg *sync.WaitGroup, jobChannel <-chan Job, logger logger.Interface) {
+	logger.Info("Start worker")
 	for {
 		select {
 		case job, ok := <-jobChannel:
 			if !ok {
-				break LOOP
+				goto END
 			}
 			job()
 			wg.Done()
 		}
 	}
+END:
+	logger.Info("Job is done!")
 }

@@ -24,9 +24,8 @@ func NewWrokerPool(WorkersCount int, logger logger.Interface) *WorkerPool {
 }
 
 func (w *WorkerPool) Start() {
-	for i := 0; i < w.WorkersCount; i++ {
-		i := i
-		go Worker(&w.wg, w.jobs, w.Logger, i)
+	for range w.WorkersCount {
+		go Worker(&w.wg, w.jobs, w.Logger)
 	}
 }
 
